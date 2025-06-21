@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sua URL encurtada - LINKZIN</title>
+    <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+        .short-url-container {
+            max-width: 420px;
+            margin: 60px auto 0 auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 38px 32px 28px 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .short-url-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .short-url-subtitle {
+            color: #4b5563;
+            font-size: 1.08rem;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        .short-url-block {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            background: #f5f7fa;
+            border-radius: 10px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            padding: 0 0 0 18px;
+            margin-bottom: 10px;
+        }
+        .short-url-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 1.1rem;
+            color: #2563eb;
+            font-weight: 600;
+            padding: 18px 0;
+            outline: none;
+        }
+        .short-url-input:read-only {
+            cursor: pointer;
+        }
+        .btn-copy-url {
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 0 10px 10px 0;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0 22px;
+            height: 44px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-left: 8px;
+        }
+        .btn-copy-url:hover {
+            background: #1d4ed8;
+        }
+        .short-url-actions {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .btn-blue {
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 13px 0;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-blue:hover {
+            background: #1d4ed8;
+        }
+        .short-url-note {
+            font-size: 0.92rem;
+            color: #888;
+            margin-top: 18px;
+            text-align: center;
+        }
+        @media (max-width: 600px) {
+            .short-url-container {
+                max-width: 98vw;
+                padding: 18px 4vw 18px 4vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <img src="LOGO_LINKZIN_005.png" alt="LINKZIN">
+            </a>
+            <nav class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="index.html"><strong>Início</strong></a></li>
+                    <li><a href="recursos.html"><strong>Recursos</strong></a></li>
+                    <li><a href="sorteador.html"><strong>Sorteador</strong></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="short-url-container">
+            <div class="short-url-title">Encurte seu link</div>
+            <div class="short-url-subtitle">Insira a URL longa abaixo para gerar uma versão curta e copiar facilmente.</div>
+            <form id="shortenerForm" style="width:100%;margin-bottom:18px;">
+                <input type="url" id="longUrlInput" class="short-url-input" placeholder="Cole sua URL longa aqui" required style="background:#fff; color:#222; font-weight:400;">
+                <button type="submit" class="btn-blue" style="margin-top:10px;width:100%;"><i class="fas fa-link"></i> Encurtar</button>
+            </form>
+            <div class="short-url-block" id="shortUrlBlock" style="display:none;">
+                <input type="text" class="short-url-input" id="shortUrl" value="" placeholder="Sua URL curta aparecerá aqui" readonly>
+                <button class="btn-copy-url" id="copyShortUrlBtn"><i class="fas fa-copy"></i> Copiar URL</button>
+            </div>
+            <div class="short-url-actions">
+                <button class="btn-blue" id="showClicksBtn"><i class="fas fa-chart-line"></i> Total de cliques da sua URL curta</button>
+                <button class="btn-blue" onclick="window.location.reload()"><i class="fas fa-link"></i> Encurtar outra URL</button>
+                <div id="cliquesConsulta" style="margin-top:12px; display:none; flex-direction:column; gap:8px; align-items:center;">
+                    <input type="text" id="consultaShortUrl" class="short-url-input" placeholder="Cole sua URL curta aqui" style="width:100%;max-width:320px;">
+                    <button class="btn-blue" id="consultarCliquesBtn" style="width:100%;max-width:320px;">Consultar Cliques</button>
+                    <div id="resultadoCliques" style="margin-top:8px;font-weight:600;color:#2563eb;"></div>
+                </div>
+            </div>
+            <div class="short-url-note">* URLs curtas que não têm pelo menos um clique por mês são desativadas</div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="LOGO_LINKZIN_005.png" alt="LINKZIN">
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Encurtador</a>
+                    <a href="contador.html">Contador de Cliques</a>
+                    <a href="desencurtar.html">Desencurtar URL</a>
+                    <a href="porque-usar.html">Por que LINKZIN?</a>
+                    <a href="denunciar.html">Denunciar URL</a>
+                    <a href="termos.html">Termos de Serviço</a>
+                    <a href="privacidade.html">Privacidade</a>
+                    <a href="contato.html">Contato</a>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2024 LinkZin - Ferramenta para encurtar um link longo</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Função para gerar código curto aleatório (simulação)
+        function gerarCodigoCurto() {
+            return Math.random().toString(36).substr(2, 6);
+        }
+
+        // Função para copiar a URL curta
+        function copyShortUrl() {
+            const input = document.getElementById('shortUrl');
+            input.select();
+            input.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+            const btn = document.getElementById('copyShortUrlBtn');
+            btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-copy"></i> Copiar URL';
+            }, 1800);
+        }
+
+        // Lógica do formulário de encurtamento
+        document.getElementById('shortenerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const longUrl = document.getElementById('longUrlInput').value.trim();
+            if (!longUrl) return;
+            // Simula geração de URL curta
+            const shortCode = gerarCodigoCurto();
+            const shortUrl = window.location.origin + '/' + shortCode;
+            const shortUrlInput = document.getElementById('shortUrl');
+            shortUrlInput.value = shortUrl;
+            document.getElementById('shortUrlBlock').style.display = 'flex';
+        });
+        // Botão de copiar
+        document.getElementById('copyShortUrlBtn').addEventListener('click', copyShortUrl);
+
+        // Mostrar campo de consulta ao clicar no botão
+        const showClicksBtn = document.getElementById('showClicksBtn');
+        const cliquesConsulta = document.getElementById('cliquesConsulta');
+        if (showClicksBtn && cliquesConsulta) {
+            showClicksBtn.addEventListener('click', function() {
+                cliquesConsulta.style.display = 'flex';
+            });
+        }
+        // Função para consultar cliques
+        function consultarCliques(shortUrl) {
+            // Tenta buscar no localStorage (mesma lógica do script.js)
+            const urls = JSON.parse(localStorage.getItem('urlDatabase') || '{}');
+            const urlData = Object.values(urls).find(u => u.shortUrl === shortUrl);
+            if (urlData) {
+                return urlData.clicks || 0;
+            }
+            return null;
+        }
+        const consultarCliquesBtn = document.getElementById('consultarCliquesBtn');
+        const consultaShortUrl = document.getElementById('consultaShortUrl');
+        const resultadoCliques = document.getElementById('resultadoCliques');
+        if (consultarCliquesBtn && consultaShortUrl && resultadoCliques) {
+            consultarCliquesBtn.addEventListener('click', function() {
+                const shortUrl = consultaShortUrl.value.trim();
+                if (!shortUrl) {
+                    resultadoCliques.textContent = 'Cole sua URL curta para consultar.';
+                    resultadoCliques.style.color = '#e11d48';
+                    return;
+                }
+                const cliques = consultarCliques(shortUrl);
+                if (cliques !== null) {
+                    resultadoCliques.textContent = `Total de cliques: ${cliques}`;
+                    resultadoCliques.style.color = '#2563eb';
+                } else {
+                    resultadoCliques.textContent = 'URL curta não encontrada.';
+                    resultadoCliques.style.color = '#e11d48';
+                }
+            });
+        }
+    </script>
+</body>
+</html> 

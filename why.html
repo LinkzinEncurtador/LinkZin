@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Por que LINKZIN? - Encurtador de URLs</title>
+    <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .why-section {
+            padding-top: 100px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px;
+        }
+
+        .why-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .why-title {
+            font-size: 42px;
+            margin-bottom: 20px;
+            color: var(--black);
+        }
+
+        .why-description {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: 30px;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .benefit-item svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 20px;
+        }
+
+        .benefit-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--black);
+        }
+
+        .benefit-description {
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--gray);
+        }
+
+        @media (max-width: 768px) {
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <img src="LOGO_LINKZIN_005.png" alt="LINKZIN">
+            </a>
+            <nav class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="index.html"><strong>Início</strong></a></li>
+                    <li><a href="recursos.html"><strong>Recursos</strong></a></li>
+                    <li><a href="sorteador.html"><strong>Sorteador</strong></a></li>
+                    <li><a href="login.html" class="btn btn-outline">Login</a></li>
+                    <li><a href="signup.html" class="btn btn-primary">Cadastre-se</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="why-section">
+            <div class="why-header">
+                <h1 class="why-title">Encurte, compartilhe e monitore</h1>
+                <p class="why-description">Suas URLs encurtadas podem ser usadas em publicações, blogs, fóruns, emails, mensagens instantâneas e outros locais. Acompanhe as estatísticas para seus negócios e projetos monitorando a quantidade de acessos na sua URL com o contador de cliques.</p>
+            </div>
+
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#0066FF">
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3 class="benefit-title">Curto</h3>
+                    <p class="benefit-description">Encurte links de qualquer tamanho com o Encurtador</p>
+                </div>
+
+                <div class="benefit-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#0066FF">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3 class="benefit-title">Grátis</h3>
+                    <p class="benefit-description">Crie quantos links encurtados quiser e compartilhe</p>
+                </div>
+
+                <div class="benefit-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#0066FF">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3 class="benefit-title">Seguro</h3>
+                    <p class="benefit-description">Usamos protocolo https com criptografia de dados nas URLs</p>
+                </div>
+
+                <div class="benefit-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#0066FF">
+                        <circle cx="12" cy="12" r="10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 6v6l4 2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3 class="benefit-title">Estatísticas</h3>
+                    <p class="benefit-description">Verifique o número de cliques da sua URL encurtada</p>
+                </div>
+
+                <div class="benefit-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#0066FF">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 12l2 2 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3 class="benefit-title">Confiável</h3>
+                    <p class="benefit-description">Excluímos links que tentam disseminar spam e malware</p>
+                </div>
+
+                <div class="benefit-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#0066FF">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 21h8M12 17v4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3 class="benefit-title">Responsivo</h3>
+                    <p class="benefit-description">Compatível com desktop, tablets e dispositivos móveis</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-top">
+                <img src="LOGO_LINKZIN_005.png" alt="LINKZIN" class="footer-logo">
+                <div class="footer-links">
+                    <a href="why.html">Por que LINKZIN?</a>
+                    <a href="pricing.html">Preços</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 LinkZin.com - Ferramenta para encurtar um link longo</p>
+                <div class="footer-menu">
+                    <a href="#">Encurtador</a>
+                    <a href="contador.html">Contador de Cliques</a>
+                    <a href="#">Desencurtar URL</a>
+                    <a href="#">Denunciar URL</a>
+                    <a href="#">Termos de Serviço</a>
+                    <a href="#">Privacidade</a>
+                    <a href="#">Contato</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 

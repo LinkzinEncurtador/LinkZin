@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preços - LINKZIN</title>
+    <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        main {
+            padding-top: 100px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .pricing-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .pricing-title {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .pricing-description {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .pricing-card h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .features-list li {
+            margin-bottom: 10px;
+            color: var(--gray);
+        }
+
+        .plan-button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .pricing-card.featured {
+            border: 2px solid var(--yellow);
+        }
+
+        .plan-name {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .plan-price {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .plan-features li {
+            margin-bottom: 10px;
+            color: var(--gray);
+        }
+
+        .with-ads {
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <img src="images/LOGO_LINKZIN_005.svg" alt="LINKZIN" style="height: 40px;">
+                </a>
+                <div class="header-right">
+                    <div class="language-selector">
+                        <button class="btn-language">
+                            <i class="fas fa-globe"></i>
+                            IN
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="header-buttons">
+                        <a href="/cotacao" class="btn btn-outline">Obter uma cotação</a>
+                        <a href="/cadastro" class="btn btn-primary">Cadastre-se gratuitamente</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="pricing-section">
+            <div class="container">
+                <h1>Escolha o Plano Ideal</h1>
+                <p class="subtitle">Encontre o plano perfeito para suas necessidades de encurtamento de links</p>
+
+                <div class="pricing-grid">
+                    <!-- Plano Gratuito -->
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h2>Gratuito</h2>
+                            <div class="price">$0</div>
+                            <p class="period">para sempre</p>
+                        </div>
+                        <ul class="features">
+                            <li><i class="fas fa-check"></i> 5 links/mês</li>
+                            <li><i class="fas fa-check"></i> Links Básicos</li>
+                            <li><i class="fas fa-check"></i> Análise Básica</li>
+                            <li><i class="fas fa-check"></i> Suporte por e-mail</li>
+                        </ul>
+                        <a href="signup.html" class="btn-pricing">Começar Agora</a>
+                    </div>
+
+                    <!-- Plano Premium -->
+                    <div class="pricing-card featured">
+                        <div class="pricing-header">
+                            <h2>Premium</h2>
+                            <div class="price">$348</div>
+                            <p class="period">por ano</p>
+                        </div>
+                        <ul class="features">
+                            <li><i class="fas fa-check"></i> 3.000 links/mês</li>
+                            <li><i class="fas fa-check"></i> Links Avançados</li>
+                            <li><i class="fas fa-check"></i> Análise Avançada</li>
+                            <li><i class="fas fa-check"></i> Suporte por e-mail</li>
+                        </ul>
+                        <a href="signup.html" class="btn-pricing">Assinar Agora</a>
+                    </div>
+                </div>
+
+                <div class="pricing-faq">
+                    <h2>Perguntas Frequentes</h2>
+                    <div class="faq-grid">
+                        <div class="faq-item">
+                            <h3>Posso mudar de plano depois?</h3>
+                            <p>Sim, você pode mudar de plano a qualquer momento. A diferença será cobrada ou creditada proporcionalmente.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>Como funciona o suporte?</h3>
+                            <p>Oferecemos suporte por e-mail para todos os planos, com tempo de resposta de até 24 horas.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>Posso cancelar quando quiser?</h3>
+                            <p>Sim, você pode cancelar sua assinatura a qualquer momento sem multa.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>Os links expiram?</h3>
+                            <p>Não, seus links permanecerão ativos enquanto sua conta estiver ativa.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="images/LOGO_LINKZIN_005.svg" alt="LINKZIN" style="height: 40px;">
+                </div>
+                <div class="footer-links">
+                    <a href="/encurtador">Encurtador</a>
+                    <a href="/contador">Contador de Cliques</a>
+                    <a href="/desencurtar">Desencurtar URL</a>
+                    <a href="/denunciar">Denunciar URL</a>
+                    <a href="termos.html">Termos de Serviço</a>
+                    <a href="/privacidade">Privacidade</a>
+                    <a href="/contato">Contato</a>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2025 LinkZin - Ferramenta para encurtar um link longo</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINKZIN - Encurtador de Links</title>
+    <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: var(--white);
+        }
+
+        .hero-title {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--black);
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--gray);
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .url-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid var(--gray);
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+        }
+
+        .link-icon {
+            width: 48px;
+            height: 48px;
+            background: #FF6B00;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .link-icon::before {
+            content: '';
+            width: 24px;
+            height: 24px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'%3E%3C/path%3E%3Cpath d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+
+        .qr-icon {
+            width: 48px;
+            height: 48px;
+            background: #000000;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .qr-icon::before {
+            content: '';
+            width: 24px;
+            height: 24px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M3 3h6v6H3zM15 3h6v6h-6zM3 15h6v6H3zM16 16h2v2h-2zM20 16v-1h-2v2h1v1h2v-2zM20 20h-2v2h2zM16 20h2v2h-2zM20 18h2v2h-2zM5 5h2v2H5zM17 5h2v2h-2zM5 17h2v2H5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--black);
+        }
+
+        .feature-description {
+            color: var(--gray);
+        }
+
+        .url-result {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .url-result h3 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--black);
+        }
+
+        .url-result-box {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .url-result a {
+            color: var(--yellow);
+            text-decoration: none;
+            word-break: break-all;
+            font-size: 16px;
+        }
+
+        .url-result p {
+            color: var(--gray);
+            font-size: 14px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .clicks-counter {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .clicks-count {
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--yellow);
+            margin: 10px 0;
+        }
+
+        .clicks-label {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .url-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn-copy, .btn-new {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-copy {
+            background: var(--yellow);
+            color: var(--black);
+        }
+
+        .btn-new {
+            background: #f5f5f5;
+            color: var(--gray);
+        }
+
+        .url-warning {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        footer {
+            background: #002B49;
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-logo {
+            height: 40px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .footer-links a:hover {
+            color: var(--yellow);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .footer-bottom p {
+            margin-bottom: 20px;
+        }
+
+        .footer-menu {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-menu a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+        }
+
+        .footer-menu a:hover {
+            color: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .monitor-section {
+            padding: 4rem 0;
+            background: #f8f9fa;
+            text-align: center;
+        }
+        
+        .monitor-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #1f2937;
+        }
+        
+        .monitor-section p {
+            font-size: 1.2rem;
+            color: #4b5563;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <img src="LOGO_LINKZIN_005.png" alt="LINKZIN">
+            </a>
+            <nav class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="index.html"><strong>Início</strong></a></li>
+                    <li><a href="recursos.html"><strong>Recursos</strong></a></li>
+                    <li><a href="sorteador.html"><strong>Sorteador</strong></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">Encurtar um link longo</h1>
+                <div class="shortener-form">
+                    <form id="urlForm">
+                        <input type="url" id="urlInput" class="url-input" placeholder="Cole seu link longo aqui" required>
+                        <button type="submit" class="btn btn-primary">Encurtar Link</button>
+                    </form>
+                    <div id="result" class="results"></div>
+                    <div id="remaining" class="remaining-links">Links restantes este mês: 5</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="monitor-section">
+            <div class="container">
+                <h2>Encurte, compartilhe e monitore</h2>
+                <p>
+                    Suas URLs encurtadas podem ser usadas em publicações, blogs, fóruns, emails, mensagens instantâneas e outros locais. Acompanhe as estatísticas para seus negócios e projetos monitorando a quantidade de acessos na sua URL com o contador de cliques.
+                </p>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-link fa-3x"></i>
+                        <h3>Curto</h3>
+                        <p>Encurte links de qualquer tamanho com o Encurtador</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <i class="fas fa-gift fa-3x"></i>
+                        <h3>Grátis</h3>
+                        <p>Crie quantos links encurtados quiser e compartilhe</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt fa-3x"></i>
+                        <h3>Seguro</h3>
+                        <p>Usamos protocolo https com criptografia de dados nas URLs</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <i class="fas fa-chart-line fa-3x"></i>
+                        <h3>Estatísticas</h3>
+                        <p>Verifique o número de cliques da sua URL encurtada</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <i class="fas fa-check-circle fa-3x"></i>
+                        <h3>Confiável</h3>
+                        <p>Excluímos links que tentam disseminar spam e malware</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <i class="fas fa-mobile-alt fa-3x"></i>
+                        <h3>Responsivo</h3>
+                        <p>Compatível com desktop, tablets e dispositivos móveis</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="LOGO_LINKZIN_005.png" alt="LINKZIN">
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Encurtador</a>
+                    <a href="contador.html">Contador de Cliques</a>
+                    <a href="desencurtar.html">Desencurtar URL</a>
+                    <a href="porque-usar.html">Por que LINKZIN?</a>
+                    <a href="denunciar.html">Denunciar URL</a>
+                    <a href="termos.html">Termos de Serviço</a>
+                    <a href="privacidade.html">Privacidade</a>
+                    <a href="contato.html">Contato</a>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2024 LinkZin - Ferramenta para encurtar um link longo</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { shortener } from './shortener.js';
+        import { linkController } from './linkControl.js';
+
+        // Função global para ser usada no HTML
+        window.shortenUrl = async function(url) {
+            try {
+                const result = await shortener.shortenUrl(url);
+                return result;
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlForm = document.getElementById('urlForm');
+            const urlInput = document.getElementById('urlInput');
+            const resultDiv = document.getElementById('result');
+            const remainingDiv = document.getElementById('remaining');
+
+            // Função para atualizar o contador de links restantes
+            function updateRemainingLinks() {
+                const remaining = linkController.getRemainingLinks();
+                remainingDiv.textContent = `Links restantes este mês: ${remaining}`;
+            }
+
+            urlForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const longUrl = urlInput.value.trim();
+                
+                if (!longUrl) {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Por favor, insira uma URL válida.
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Verificar se o usuário pode criar mais links
+                if (!linkController.canCreateLink()) {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Você atingiu o limite mensal de links. Faça upgrade para o plano Premium!
+                        </div>
+                    `;
+                    return;
+                }
+
+                try {
+                    // Mostrar loading
+                    resultDiv.innerHTML = `
+                        <div class="result">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            Encurtando seu link...
+                        </div>
+                    `;
+
+                    const result = await shortener.shortenUrl(longUrl);
+                    const shortUrl = result.shortUrl;
+                    
+                    resultDiv.innerHTML = `
+                        <div class="result">
+                            <h3><i class="fas fa-check-circle"></i> Link encurtado com sucesso!</h3>
+                            <div class="short-url">
+                                <a href="${shortUrl}" target="_blank" rel="noopener noreferrer">${shortUrl}</a>
+                                <button class="btn btn-primary" onclick="copyToClipboard('${shortUrl}')">
+                                    <i class="fas fa-copy"></i> Copiar Link
+                                </button>
+                            </div>
+                            <p><small>Link original: ${longUrl}</small></p>
+                        </div>
+                    `;
+
+                    // Limpar o input
+                    urlInput.value = '';
+                    
+                    // Atualizar contador de links restantes
+                    updateRemainingLinks();
+                } catch (error) {
+                    resultDiv.innerHTML = `
+                        <div class="error">
+                            <i class="fas fa-exclamation-circle"></i>
+                            ${error.message}
+                        </div>
+                    `;
+                }
+            });
+
+            // Função global para copiar o link para a área de transferência
+            window.copyToClipboard = function(text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    const copyBtn = resultDiv.querySelector('button');
+                    const originalText = copyBtn.innerHTML;
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+                    copyBtn.style.background = '#10b981';
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalText;
+                        copyBtn.style.background = '';
+                    }, 2000);
+                }).catch(() => {
+                    // Fallback para navegadores que não suportam clipboard API
+                    const textArea = document.createElement('textarea');
+                    textArea.value = text;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    
+                    const copyBtn = resultDiv.querySelector('button');
+                    const originalText = copyBtn.innerHTML;
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+                    copyBtn.style.background = '#10b981';
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalText;
+                        copyBtn.style.background = '';
+                    }, 2000);
+                });
+            };
+
+            // Inicializar o contador de links restantes
+            updateRemainingLinks();
+        });
+    </script>
+</body>
+</html> 

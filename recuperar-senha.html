@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Senha - LINKZIN</title>
+    <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { background: #f5f7fa; }
+        .reset-container {
+            max-width: 420px;
+            margin: 60px auto 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            padding: 38px 32px 28px 32px;
+        }
+        .reset-title {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .reset-desc {
+            color: #4b5563;
+            font-size: 1.08rem;
+            margin-bottom: 24px;
+        }
+        .reset-form label {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .reset-form input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 1rem;
+            margin-bottom: 18px;
+            background: #f9fafb;
+        }
+        .reset-form button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: #295be7;
+            color: #fff;
+            margin-top: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .reset-form button:hover {
+            background: #1741b6;
+        }
+        .reset-msg {
+            margin-top: 10px;
+            font-size: 1rem;
+            text-align: center;
+        }
+        @media (max-width: 600px) {
+            .reset-container {
+                max-width: 98vw;
+                padding: 18px 4vw 18px 4vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <img src="LOGO_LINKZIN_005.png" alt="LINKZIN">
+            </a>
+            <nav class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="index.html"><strong>Início</strong></a></li>
+                    <li><a href="recursos.html"><strong>Recursos</strong></a></li>
+                    <li><a href="sorteador.html"><strong>Sorteador</strong></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="reset-container">
+            <div class="reset-title">Esqueceu sua senha?</div>
+            <div class="reset-desc">Isso acontece! Informe seu e-mail cadastrado para receber um código de redefinição de senha.</div>
+            <form class="reset-form" id="resetForm">
+                <label for="resetEmail">E-mail</label>
+                <input type="email" id="resetEmail" required autocomplete="email">
+                <button type="submit" id="sendCodeBtn">Enviar código</button>
+            </form>
+            <form class="reset-form" id="codeForm" style="display:none;">
+                <label for="resetCode">Código recebido</label>
+                <input type="text" id="resetCode" required>
+                <label for="newPassword">Nova senha</label>
+                <input type="password" id="newPassword" required>
+                <button type="submit" id="changePasswordBtn">Alterar senha</button>
+            </form>
+            <div class="reset-msg" id="resetMsg"></div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="LOGO_LINKZIN_005.png" alt="LINKZIN">
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Encurtador</a>
+                    <a href="contador.html">Contador de Cliques</a>
+                    <a href="/desencurtar">Desencurtar URL</a>
+                    <a href="porque-usar.html">Por que LINKZIN?</a>
+                    <a href="/denunciar">Denunciar URL</a>
+                    <a href="termos.html">Termos de Serviço</a>
+                    <a href="/privacidade">Privacidade</a>
+                    <a href="/contato">Contato</a>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2024 LinkZin - Ferramenta para encurtar um link longo</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+    // Lógica do frontend para integração com backend
+    const resetForm = document.getElementById('resetForm');
+    const codeForm = document.getElementById('codeForm');
+    const resetMsg = document.getElementById('resetMsg');
+    let emailSalvo = '';
+
+    resetForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('resetEmail').value.trim();
+        resetMsg.textContent = '';
+        // Chame o backend para enviar o código
+        try {
+            const res = await fetch('/api/send-reset-code', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ email })
+            });
+            if (res.ok) {
+                resetForm.style.display = 'none';
+                codeForm.style.display = 'block';
+                emailSalvo = email;
+                resetMsg.textContent = 'Código enviado para seu e-mail!';
+                resetMsg.style.color = '#2563eb';
+            } else {
+                resetMsg.textContent = 'E-mail não encontrado!';
+                resetMsg.style.color = '#e11d48';
+            }
+        } catch (err) {
+            resetMsg.textContent = 'Erro ao enviar código. Tente novamente.';
+            resetMsg.style.color = '#e11d48';
+        }
+    });
+
+    codeForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const code = document.getElementById('resetCode').value.trim();
+        const newPassword = document.getElementById('newPassword').value;
+        // Chame o backend para validar o código e trocar a senha
+        try {
+            const res = await fetch('/api/reset-password', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ email: emailSalvo, code, newPassword })
+            });
+            if (res.ok) {
+                resetMsg.textContent = 'Senha alterada com sucesso!';
+                resetMsg.style.color = '#2563eb';
+                codeForm.reset();
+            } else {
+                resetMsg.textContent = 'Código inválido ou expirado!';
+                resetMsg.style.color = '#e11d48';
+            }
+        } catch (err) {
+            resetMsg.textContent = 'Erro ao alterar senha. Tente novamente.';
+            resetMsg.style.color = '#e11d48';
+        }
+    });
+    </script>
+</body>
+</html> 

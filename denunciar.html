@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Denunciar URL Maliciosa - LINKZIN</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background: #fafbfc; }
+        .denunciar-container {
+            max-width: 520px;
+            margin: 60px auto 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 38px 32px 28px 32px;
+        }
+        .denunciar-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #22223b;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .denunciar-desc {
+            color: #444;
+            font-size: 1.08rem;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+        .denunciar-form label {
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .denunciar-input, .denunciar-textarea {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1.08rem;
+            color: #222;
+            padding: 12px 10px;
+            margin-bottom: 16px;
+            background: #f7f7f7;
+        }
+        .denunciar-textarea {
+            min-height: 70px;
+            resize: vertical;
+        }
+        .captcha-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+        .captcha-label {
+            font-size: 1.08rem;
+            color: #222;
+        }
+        .captcha-input {
+            width: 48px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1.08rem;
+            padding: 6px 8px;
+            text-align: center;
+        }
+        .denunciar-btns {
+            display: flex;
+            gap: 16px;
+            justify-content: flex-end;
+        }
+        .btn-denunciar {
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 10px 32px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-denunciar:hover {
+            background: #1d4ed8;
+        }
+        .btn-limpar {
+            background: #e0e7ef;
+            color: #222;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 10px 24px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-limpar:hover {
+            background: #cfd8e3;
+        }
+        .denunciar-success {
+            background: #e6ffed;
+            color: #256029;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 18px;
+            text-align: center;
+            font-size: 1.08rem;
+        }
+        @media (max-width: 600px) {
+            .denunciar-container {
+                max-width: 98vw;
+                padding: 18px 4vw 18px 4vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <img src="LOGO_LINKZIN_005.png" alt="LINKZIN">
+            </a>
+            <nav class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="index.html"><strong>Início</strong></a></li>
+                    <li><a href="recursos.html"><strong>Recursos</strong></a></li>
+                    <li><a href="sorteador.html"><strong>Sorteador</strong></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="denunciar-container">
+            <div class="denunciar-title">Denunciar URL Maliciosa</div>
+            <div class="denunciar-desc">
+                Use o formulário para denunciar URLs suspeitas de spam, phishing ou malware. URLs curtas que redirecionam para páginas maliciosas ou download de arquivos perigosos são excluídas.
+            </div>
+            <form id="denunciarForm" class="denunciar-form">
+                <label for="urlMaliciosa">URL inválida ou maliciosa</label>
+                <input type="text" id="urlMaliciosa" class="denunciar-input" placeholder="encurtador.com.br/DeFgH" required>
+                <label for="comentario">Comentário</label>
+                <textarea id="comentario" class="denunciar-textarea" placeholder="Descreva o motivo da denúncia" required></textarea>
+                <div class="captcha-row">
+                    <span class="captcha-label" id="captchaLabel">3 + 2 =</span>
+                    <input type="text" id="captcha" class="captcha-input" maxlength="2" required autocomplete="off">
+                </div>
+                <div class="denunciar-btns">
+                    <button type="submit" class="btn-denunciar">Enviar</button>
+                    <button type="button" class="btn-limpar" id="btnLimpar">Limpar</button>
+                </div>
+            </form>
+            <div id="denunciarSuccess" class="denunciar-success" style="display:none;"></div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="LOGO_LINKZIN_005.png" alt="LINKZIN">
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Encurtador</a>
+                    <a href="contador.html">Contador de Cliques</a>
+                    <a href="desencurtar.html">Desencurtar URL</a>
+                    <a href="porque-usar.html">Por que LINKZIN?</a>
+                    <a href="denunciar.html">Denunciar URL</a>
+                    <a href="termos.html">Termos de Serviço</a>
+                    <a href="privacidade.html">Privacidade</a>
+                    <a href="contato.html">Contato</a>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2024 LinkZin - Ferramenta para encurtar um link longo</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const form = document.getElementById('denunciarForm');
+        const btnLimpar = document.getElementById('btnLimpar');
+        const successDiv = document.getElementById('denunciarSuccess');
+        const captchaLabel = document.getElementById('captchaLabel');
+        const captchaInput = document.getElementById('captcha');
+        let captchaA = 0;
+        let captchaB = 0;
+        function gerarCaptcha() {
+            captchaA = Math.floor(Math.random() * 10) + 1;
+            captchaB = Math.floor(Math.random() * 10) + 1;
+            captchaLabel.textContent = `${captchaA} + ${captchaB} =`;
+            captchaInput.value = '';
+        }
+        gerarCaptcha();
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const url = document.getElementById('urlMaliciosa').value.trim();
+            const comentario = document.getElementById('comentario').value.trim();
+            const captcha = document.getElementById('captcha').value.trim();
+            if (parseInt(captcha, 10) !== captchaA + captchaB) {
+                alert('Captcha incorreto. Por favor, resolva a soma corretamente.');
+                gerarCaptcha();
+                return;
+            }
+            // Aqui você pode enviar para backend se desejar
+            form.style.display = 'none';
+            successDiv.style.display = 'block';
+            successDiv.textContent = 'Obrigado, a URL foi enviada para a nossa equipe e está sendo verificada.';
+            gerarCaptcha();
+        });
+        btnLimpar.addEventListener('click', function() {
+            form.reset();
+            gerarCaptcha();
+        });
+    </script>
+</body>
+</html> 
