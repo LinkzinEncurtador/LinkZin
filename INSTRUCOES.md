@@ -75,6 +75,15 @@ Depois abra o link que aparecer no terminal
 3. **Teste** em outro navegador
 4. **Verifique** se o localStorage está habilitado
 
+### Como funciona no GitHub Pages?
+
+Para que os links encurtados funcionem (`https://seu-usuario.github.io/seu-repo/codigo123`), o GitHub Pages usa um truque:
+
+- Qualquer link para uma página não existente (como um link encurtado) é direcionado para o arquivo `404.html`.
+- O `404.html` contém um script que pega o código do link da URL (`codigo123`), busca a URL original no `localStorage` e redireciona o usuário para o destino correto.
+
+**Importante**: Para que isso funcione, o arquivo `404.html` precisa existir no seu repositório.
+
 ## 🎉 Pronto!
 
 Seu encurtador de links está funcionando perfeitamente! Agora você pode:

@@ -103,4 +103,6 @@ async function simulateClickCount(shortUrl) {
         clicks: Math.floor(Math.random() * 1000),
         lastClick: new Date().toLocaleString('pt-BR')
     };
-} 
+}
+
+const BACKEND_URL = 'https://seu-sorteador.onrender.com'; 

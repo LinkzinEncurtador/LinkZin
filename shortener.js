@@ -2,7 +2,9 @@ import { linkController } from './linkControl.js';
 
 class LinkShortener {
     constructor() {
-        this.baseUrl = window.location.origin;
+        const path = window.location.pathname;
+        const basePath = path.substring(0, path.lastIndexOf('/') + 1);
+        this.baseUrl = window.location.origin + basePath;
         this.shortLinks = new Map();
         this.stats = new Map();
         this.loadFromLocalStorage();
@@ -47,7 +49,7 @@ class LinkShortener {
             this.saveToLocalStorage();
 
             return {
-                shortUrl: this.baseUrl + '/' + shortCode,
+                shortUrl: this.baseUrl + shortCode,
                 code: shortCode
             };
         } catch (error) {

@@ -1,7 +1,7 @@
 // Classe para gerenciar o controle de links
 class LinkController {
     constructor() {
-        this.FREE_LIMIT = 5; // Limite mensal para usuários gratuitos
+        this.FREE_LIMIT = 15; // Limite mensal para usuários gratuitos
         this.PREMIUM_LIMIT = 3000; // Limite mensal para usuários premium
         this.loadFromLocalStorage();
     }
