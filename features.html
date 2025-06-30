@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursos - LINKZIN</title>
+    <link rel="icon" href="images/LOGO_LINKZIN_005.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="logo">
+                    <img src="images/LOGO_LINKZIN_005.png" alt="LINKZIN Logo">
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="features.html">Recursos</a></li>
+                    <li><a href="#" id="numberDrawerBtn" class="drawer-btn">Sorteador</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="register.html" class="btn btn-primary">Cadastre-se</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Modal do Sorteador -->
+    <div id="numberDrawerModal" class="modal">
+        <div class="modal-content sorteador-modal">
+            <span class="close">&times;</span>
+            <form class="sorteador-form">
+                <div class="sorteador-row">
+                    <span>Sorte</span>
+                    <input type="number" id="quantity" min="1" max="10" value="1" class="sorteador-input" />
+                    <span id="label-num">número</span>
+                </div>
+                <div class="sorteador-row">
+                    <span>entre</span>
+                    <input type="number" id="minNumber" min="1" value="1" class="sorteador-input" />
+                    <span>e</span>
+                    <input type="number" id="maxNumber" min="1" value="100" class="sorteador-input" />
+                </div>
+                <button id="drawButton" type="button" class="btn sorteador-btn">SORTEAR AGORA!</button>
+            </form>
+            <div id="drawResult" class="draw-result"></div>
+            <div class="sorteador-info">
+                <strong>Sorteador de números aleatórios gratuito!</strong>
+                <p>Para acessar o sorteio rápido, sem opção de salvar, clique aqui.</p>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <section class="features-hero">
+            <div class="container">
+                <h1>Recursos do LINKZIN</h1>
+                <p class="subtitle">Descubra tudo que você pode fazer com nossos encurtadores de links</p>
+            </div>
+        </section>
+
+        <section class="click-counter-section">
+            <div class="container">
+                <div class="counter-card">
+                    <h2>Contador de Cliques da URL</h2>
+                    <p>Digite a URL curta abaixo para acompanhar quantos cliques ela recebeu.</p>
+                    <form id="clickCounterForm" class="counter-form">
+                        <input type="text" id="shortUrl" placeholder="Digite aqui sua URL encurtada" required>
+                        <button type="submit" class="btn btn-primary">Contar Cliques</button>
+                    </form>
+                    <div id="clickResult" class="click-result"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="qr-code-section">
+            <div class="container">
+                <div class="qr-card">
+                    <h2>Conecte seu público com uma simples digitalização</h2>
+                    <p>Crie um QR Code a partir de qualquer link curto. Depois, edite, personalize e acompanhe seus QR Codes aqui.</p>
+                    <a href="index.html" class="btn btn-primary">Crie um código linkZin</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-grid">
+            <div class="container">
+                <div class="feature-card">
+                    <i class="fas fa-link"></i>
+                    <h3>Personalização de Links</h3>
+                    <p>Personalize seus links com o nome da sua marca</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Análise Detalhada</h3>
+                    <p>Acompanhe cliques, localização e dispositivos</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Segurança</h3>
+                    <p>Proteja seus dados com redirecionamento seguro</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-share-alt"></i>
+                    <h3>Compartilhamento</h3>
+                    <p>Compartilhe com agilidade e monitore com precisão</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>Comece agora e leve seu engajamento a um novo nível</h2>
+                <div class="cta-buttons">
+                    <a href="index.html" class="btn btn-primary">🔗 Crie seu link com o LINKZIN</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="images/LOGO_LINKZIN_005.png" alt="LINKZIN Logo">
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Links Rápidos</h4>
+                        <ul>
+                            <li><a href="index.html">Início</a></li>
+                            <li><a href="pricing.html">Planos</a></li>
+                            <li><a href="features.html">Recursos</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Suporte</h4>
+                        <ul>
+                            <li><a href="about.html">Sobre</a></li>
+                            <li><a href="contact.html">Contato</a></li>
+                            <li><a href="terms.html">Termos</a></li>
+                            <li><a href="privacy.html">Privacidade</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 LINKZIN. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="features.js"></script>
+</body>
+</html> 

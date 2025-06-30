@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="300" viewBox="0 0 1200 300" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        .text {
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        .icon {
+            fill: #FFB800;
+        }
+    </style>
+    <g>
+        <text x="50" y="200" class="text" font-size="180" fill="#333333">LINKZIN</text>
+        <circle cx="1000" cy="150" r="100" class="icon" />
+        <path d="M950 150 L1050 150 M1000 100 L1000 200" stroke="#333333" stroke-width="20" />
+    </g>
+</svg>

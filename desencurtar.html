@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desencurtar URL - LINKZIN</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background: #f8f9fa; }
+        .desencurtar-container {
+            max-width: 420px;
+            margin: 60px auto 0 auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 38px 32px 28px 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .desencurtar-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .desencurtar-subtitle {
+            color: #4b5563;
+            font-size: 1.08rem;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        .desencurtar-form {
+            width: 100%;
+            display: flex;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .desencurtar-input {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            color: #222;
+            padding: 14px 12px;
+        }
+        .btn-desencurtar {
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0 22px;
+            height: 44px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-desencurtar:hover {
+            background: #1d4ed8;
+        }
+        .desencurtar-result {
+            margin-top: 18px;
+            width: 100%;
+            text-align: center;
+            font-size: 1.08rem;
+        }
+        .desencurtar-result a {
+            color: #2563eb;
+            font-weight: 600;
+            word-break: break-all;
+        }
+        .desencurtar-error {
+            color: #e53e3e;
+            background: #fff0f0;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 12px;
+        }
+        @media (max-width: 600px) {
+            .desencurtar-container {
+                max-width: 98vw;
+                padding: 18px 4vw 18px 4vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <img src="LOGO_LINKZIN_005.png" alt="LINKZIN">
+            </a>
+            <nav class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="index.html"><strong>Início</strong></a></li>
+                    <li><a href="recursos.html"><strong>Recursos</strong></a></li>
+                    <li><a href="sorteador.html"><strong>Sorteador</strong></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="desencurtar-container">
+            <div class="desencurtar-title">Desencurtar URL</div>
+            <div class="desencurtar-subtitle">
+                Digite a URL curta para verificar a página de destino.<br>
+                <span style="font-size:0.98rem;color:#888;">Exemplo: linkzin.com.br/DeFgH</span>
+            </div>
+            <form id="desencurtarForm" class="desencurtar-form">
+                <input type="text" id="shortUrlInput" class="desencurtar-input" placeholder="Cole a URL curta aqui" required>
+                <button type="submit" class="btn-desencurtar"><i class="fas fa-search"></i> Verificar</button>
+            </form>
+            <div id="desencurtarResult" class="desencurtar-result"></div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="LOGO_LINKZIN_005.png" alt="LINKZIN">
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Encurtador</a>
+                    <a href="contador.html">Contador de Cliques</a>
+                    <a href="desencurtar.html">Desencurtar URL</a>
+                    <a href="porque-usar.html">Por que LINKZIN?</a>
+                    <a href="denunciar.html">Denunciar URL</a>
+                    <a href="termos.html">Termos de Serviço</a>
+                    <a href="privacidade.html">Privacidade</a>
+                    <a href="contato.html">Contato</a>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2024 LinkZin - Ferramenta para encurtar um link longo</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.getElementById('desencurtarForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const input = document.getElementById('shortUrlInput');
+            const resultDiv = document.getElementById('desencurtarResult');
+            resultDiv.innerHTML = '';
+            let url = input.value.trim();
+            if (!url) return;
+            // Extrai o código curto da URL
+            let code = url.split('/').pop();
+            if (!code || code.length < 4) {
+                resultDiv.innerHTML = '<div class="desencurtar-error">URL curta inválida.</div>';
+                return;
+            }
+            // Simulação: busca no localStorage (ajuste para backend real se necessário)
+            let found = false;
+            let longUrl = '';
+            try {
+                const data = localStorage.getItem('shortLinks');
+                if (data) {
+                    const arr = JSON.parse(data);
+                    for (const [shortCode, originalUrl] of arr) {
+                        if (shortCode === code) {
+                            longUrl = originalUrl;
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+            } catch {}
+            if (found && longUrl) {
+                resultDiv.innerHTML = `<div>Esta URL redireciona para:<br><a href="${longUrl}" target="_blank">${longUrl}</a></div>`;
+            } else {
+                resultDiv.innerHTML = '<div class="desencurtar-error">URL curta não encontrada ou já expirada.</div>';
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,33 @@
+{
+    "name": "linkzin",
+    "version": "1.0.0",
+    "description": "Encurtador de links moderno e responsivo",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "node server.js",
+        "serve": "node server.js",
+        "test": "echo \"Abra http://localhost:3000/test.html para testar\" && exit 0"
+    },
+    "keywords": [
+        "encurtador",
+        "links",
+        "url-shortener",
+        "javascript",
+        "html",
+        "css"
+    ],
+    "author": "LINKZIN Team",
+    "license": "MIT",
+    "engines": {
+        "node": ">=14.0.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/seu-usuario/linkzin.git"
+    },
+    "bugs": {
+        "url": "https://github.com/seu-usuario/linkzin/issues"
+    },
+    "homepage": "https://github.com/seu-usuario/linkzin#readme"
+}

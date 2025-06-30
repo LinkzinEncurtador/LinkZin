@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - LINKZIN</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <img src="LOGO_LINKZIN_005.png" alt="LINKZIN">
+            </a>
+            <nav class="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="index.html"><strong>Início</strong></a></li>
+                    <li><a href="recursos.html"><strong>Recursos</strong></a></li>
+                    <li><a href="sorteador.html"><strong>Sorteador</strong></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="dashboard">
+            <div class="container">
+                <h1>Dashboard</h1>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Links Criados</h3>
+                        <div class="number">3</div>
+                        <p>de 5 este mês</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total de Cliques</h3>
+                        <div class="number">127</div>
+                        <p>nos últimos 30 dias</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Links Ativos</h3>
+                        <div class="number">12</div>
+                        <p>no total</p>
+                    </div>
+                </div>
+
+                <div class="recent-links">
+                    <h2>Links Recentes</h2>
+                    <div class="links-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Link Original</th>
+                                    <th>Link Curto</th>
+                                    <th>Cliques</th>
+                                    <th>Data de Criação</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="long-url">https://exemplo.com/pagina-muito-longa...</td>
+                                    <td><a href="#">linkzin.com/abc123</a></td>
+                                    <td>45</td>
+                                    <td>15/03/2024</td>
+                                    <td>
+                                        <button class="btn-icon" title="Copiar"><i class="fas fa-copy"></i></button>
+                                        <button class="btn-icon" title="Estatísticas"><i class="fas fa-chart-bar"></i></button>
+                                        <button class="btn-icon" title="Excluir"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="long-url">https://outroexemplo.com/outra-pagina...</td>
+                                    <td><a href="#">linkzin.com/xyz789</a></td>
+                                    <td>32</td>
+                                    <td>14/03/2024</td>
+                                    <td>
+                                        <button class="btn-icon" title="Copiar"><i class="fas fa-copy"></i></button>
+                                        <button class="btn-icon" title="Estatísticas"><i class="fas fa-chart-bar"></i></button>
+                                        <button class="btn-icon" title="Excluir"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="upgrade-banner">
+                    <div class="banner-content">
+                        <h3>Precisa de mais links?</h3>
+                        <p>Faça upgrade para o plano Premium e tenha acesso a 3.000 links por mês!</p>
+                        <a href="/precos" class="btn btn-primary">Ver Planos</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="LOGO_LINKZIN_005" alt="LINKZIN">
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Encurtador</a>
+                    <a href="contador.html">Contador de Cliques</a>
+                    <a href="/desencurtar">Desencurtar URL</a>
+                    <a href="/denunciar">Denunciar URL</a>
+                    <a href="termos.html">Termos de Serviço</a>
+                    <a href="/privacidade">Privacidade</a>
+                    <a href="/contato">Contato</a>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2024 LinkZin - Ferramenta para encurtar um link longo</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function logout() {
+            // Implementar lógica de logout
+            window.location.href = '/';
+        }
+
+        // Implementar lógica para copiar links
+        document.querySelectorAll('.btn-icon').forEach(button => {
+            button.addEventListener('click', function() {
+                const action = this.title;
+                const row = this.closest('tr');
+                const shortUrl = row.querySelector('a').textContent;
+
+                switch(action) {
+                    case 'Copiar':
+                        navigator.clipboard.writeText(shortUrl).then(() => {
+                            alert('Link copiado!');
+                        });
+                        break;
+                    case 'Estatísticas':
+                        window.location.href = `/stats/${shortUrl.split('/').pop()}`;
+                        break;
+                    case 'Excluir':
+                        if(confirm('Tem certeza que deseja excluir este link?')) {
+                            // Implementar lógica de exclusão
+                            row.remove();
+                        }
+                        break;
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste do Encurtador</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-form {
+            margin: 20px 0;
+        }
+        input[type="url"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .result {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <h1>Teste do Encurtador de Links</h1>
+    
+    <div class="test-form">
+        <h3>Teste 1: URL válida</h3>
+        <input type="url" id="testUrl1" value="https://www.google.com" placeholder="Digite uma URL">
+        <button onclick="testShorten(1)">Testar Encurtamento</button>
+        <div id="result1" class="result"></div>
+    </div>
+
+    <div class="test-form">
+        <h3>Teste 2: URL sem protocolo</h3>
+        <input type="url" id="testUrl2" value="www.github.com" placeholder="Digite uma URL">
+        <button onclick="testShorten(2)">Testar Encurtamento</button>
+        <div id="result2" class="result"></div>
+    </div>
+
+    <div class="test-form">
+        <h3>Teste 3: URL inválida</h3>
+        <input type="url" id="testUrl3" value="url-invalida" placeholder="Digite uma URL">
+        <button onclick="testShorten(3)">Testar Encurtamento</button>
+        <div id="result3" class="result"></div>
+    </div>
+
+    <script type="module">
+        import { shortener } from './shortener.js';
+        import { linkController } from './linkControl.js';
+
+        window.testShorten = async function(testNumber) {
+            const input = document.getElementById(`testUrl${testNumber}`);
+            const resultDiv = document.getElementById(`result${testNumber}`);
+            const url = input.value.trim();
+
+            try {
+                resultDiv.innerHTML = 'Encurtando...';
+                const result = await shortener.shortenUrl(url);
+                resultDiv.innerHTML = `
+                    <strong>Sucesso!</strong><br>
+                    URL Original: ${url}<br>
+                    URL Encurtada: <a href="${result.shortUrl}" target="_blank">${result.shortUrl}</a><br>
+                    Código: ${result.code}
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>Erro:</strong> ${error.message}`;
+                resultDiv.className = 'result error';
+            }
+        };
+
+        // Mostrar links restantes
+        document.addEventListener('DOMContentLoaded', function() {
+            const remaining = linkController.getRemainingLinks();
+            const infoDiv = document.createElement('div');
+            infoDiv.innerHTML = `<p><strong>Links restantes este mês:</strong> ${remaining}</p>`;
+            document.body.insertBefore(infoDiv, document.body.firstChild);
+        });
+    </script>
+</body>
+</html> 
