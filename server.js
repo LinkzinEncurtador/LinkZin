@@ -2,6 +2,7 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 const path = require('path');
 const cors = require('cors');
+const fs = require('fs');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -16,6 +17,220 @@ app.get('/', (req, res) => {
 
 // Servir arquivos estáticos do diretório raiz
 app.use(express.static(path.join(__dirname)));
+
+// Rota para redirecionamento de links curtos
+app.get('/:shortCode', (req, res) => {
+    const shortCode = req.params.shortCode;
+    
+    // Ignora arquivos estáticos e rotas conhecidas
+    if (shortCode.includes('.') || 
+        ['api', 'login', 'signup', 'dashboard', 'pricing', 'features', 'contato', 'termos', 'privacidade'].includes(shortCode)) {
+        return res.status(404).sendFile(path.join(__dirname, '404.html'));
+    }
+    
+    // Tenta carregar os dados do localStorage do servidor (simulado)
+    try {
+        const linksData = loadLinksFromStorage();
+        const longUrl = linksData[shortCode];
+        
+        if (longUrl) {
+            // Incrementa o contador de cliques
+            incrementClickCount(shortCode);
+            
+            // Redireciona para a URL original
+            res.redirect(301, longUrl);
+        } else {
+            // Se não encontrar o link, serve a página 404
+            res.status(404).sendFile(path.join(__dirname, '404.html'));
+        }
+    } catch (error) {
+        console.error('Erro ao processar redirecionamento:', error);
+        res.status(404).sendFile(path.join(__dirname, '404.html'));
+    }
+});
+
+// API para criar links curtos
+app.post('/api/shorten', express.json(), (req, res) => {
+    try {
+        const { longUrl, shortCode } = req.body;
+        
+        if (!longUrl) {
+            return res.status(400).json({ error: 'URL longa é obrigatória' });
+        }
+        
+        // Valida a URL
+        try {
+            new URL(longUrl);
+        } catch {
+            return res.status(400).json({ error: 'URL inválida' });
+        }
+        
+        // Gera código curto se não fornecido
+        const finalShortCode = shortCode || generateShortCode();
+        
+        // Salva o link
+        const success = saveLinkToStorage(finalShortCode, longUrl);
+        
+        if (success) {
+            res.json({
+                success: true,
+                shortCode: finalShortCode,
+                shortUrl: `${req.protocol}://${req.get('host')}/${finalShortCode}`,
+                longUrl: longUrl
+            });
+        } else {
+            res.status(500).json({ error: 'Erro ao salvar link' });
+        }
+        
+    } catch (error) {
+        console.error('Erro ao criar link curto:', error);
+        res.status(500).json({ error: 'Erro interno do servidor' });
+    }
+});
+
+// API para obter estatísticas de um link
+app.get('/api/stats/:shortCode', (req, res) => {
+    try {
+        const shortCode = req.params.shortCode;
+        const stats = getLinkStats(shortCode);
+        
+        if (stats) {
+            res.json(stats);
+        } else {
+            res.status(404).json({ error: 'Link não encontrado' });
+        }
+        
+    } catch (error) {
+        console.error('Erro ao obter estatísticas:', error);
+        res.status(500).json({ error: 'Erro interno do servidor' });
+    }
+});
+
+// Função para carregar links do storage (simulação de banco de dados)
+function loadLinksFromStorage() {
+    try {
+        // Em produção, isso seria um banco de dados real
+        // Por enquanto, vamos simular com um arquivo JSON
+        const dataPath = path.join(__dirname, 'data', 'links.json');
+        
+        if (fs.existsSync(dataPath)) {
+            const data = fs.readFileSync(dataPath, 'utf8');
+            return JSON.parse(data);
+        }
+        
+        return {};
+    } catch (error) {
+        console.error('Erro ao carregar links:', error);
+        return {};
+    }
+}
+
+// Função para incrementar contador de cliques
+function incrementClickCount(shortCode) {
+    try {
+        const dataPath = path.join(__dirname, 'data', 'links.json');
+        const statsPath = path.join(__dirname, 'data', 'stats.json');
+        
+        // Garante que o diretório data existe
+        const dataDir = path.dirname(dataPath);
+        if (!fs.existsSync(dataDir)) {
+            fs.mkdirSync(dataDir, { recursive: true });
+        }
+        
+        // Carrega estatísticas existentes
+        let stats = {};
+        if (fs.existsSync(statsPath)) {
+            stats = JSON.parse(fs.readFileSync(statsPath, 'utf8'));
+        }
+        
+        // Incrementa o contador
+        if (!stats[shortCode]) {
+            stats[shortCode] = { clicks: 0, lastAccessed: null };
+        }
+        
+        stats[shortCode].clicks++;
+        stats[shortCode].lastAccessed = new Date().toISOString();
+        
+        // Salva as estatísticas
+        fs.writeFileSync(statsPath, JSON.stringify(stats, null, 2));
+        
+    } catch (error) {
+        console.error('Erro ao incrementar contador:', error);
+    }
+}
+
+// Função para salvar link no storage
+function saveLinkToStorage(shortCode, longUrl) {
+    try {
+        const dataPath = path.join(__dirname, 'data', 'links.json');
+        
+        // Garante que o diretório data existe
+        const dataDir = path.dirname(dataPath);
+        if (!fs.existsSync(dataDir)) {
+            fs.mkdirSync(dataDir, { recursive: true });
+        }
+        
+        // Carrega links existentes
+        let links = {};
+        if (fs.existsSync(dataPath)) {
+            links = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+        }
+        
+        // Adiciona o novo link
+        links[shortCode] = longUrl;
+        
+        // Salva os links
+        fs.writeFileSync(dataPath, JSON.stringify(links, null, 2));
+        
+        return true;
+    } catch (error) {
+        console.error('Erro ao salvar link:', error);
+        return false;
+    }
+}
+
+// Função para obter estatísticas de um link
+function getLinkStats(shortCode) {
+    try {
+        const statsPath = path.join(__dirname, 'data', 'stats.json');
+        const linksPath = path.join(__dirname, 'data', 'links.json');
+        
+        if (!fs.existsSync(statsPath) || !fs.existsSync(linksPath)) {
+            return null;
+        }
+        
+        const stats = JSON.parse(fs.readFileSync(statsPath, 'utf8'));
+        const links = JSON.parse(fs.readFileSync(linksPath, 'utf8'));
+        
+        if (!links[shortCode]) {
+            return null;
+        }
+        
+        return {
+            shortCode,
+            longUrl: links[shortCode],
+            clicks: stats[shortCode]?.clicks || 0,
+            lastAccessed: stats[shortCode]?.lastAccessed || null
+        };
+        
+    } catch (error) {
+        console.error('Erro ao obter estatísticas:', error);
+        return null;
+    }
+}
+
+// Função para gerar código curto aleatório
+function generateShortCode() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const codeLength = 6;
+    let code = '';
+    
+    for (let i = 0; i < codeLength; i++) {
+        code += chars[Math.floor(Math.random() * chars.length)];
+    }
+    
+    return code;
+}
 
 // Novo endpoint para streaming de eventos
 app.get('/api/scrape-stream', (req, res) => {
@@ -191,5 +406,5 @@ async function scrapeComments(page, sendEvent) {
 
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
-    console.log(`Acesse a ferramenta de sorteio em http://localhost:${port}/sorteador.html`);
+    console.log(`Acesse o gerador de QR Code em http://localhost:${port}/geradordeqrcode.html`);
 }); 
