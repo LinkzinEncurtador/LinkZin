@@ -21,7 +21,7 @@
                 <ul class="nav-links">
                     <li><a href="index.html">Início</a></li>
                     <li><a href="features.html">Recursos</a></li>
-                    <li><a href="#" id="numberDrawerBtn" class="drawer-btn">Sorteador</a></li>
+                    <li><a href="#" id="numberDrawerBtn" class="drawer-btn">Gerador de QR Code</a></li>
                     <li><a href="login.html">Login</a></li>
                     <li><a href="register.html" class="btn btn-primary">Cadastre-se</a></li>
                 </ul>
@@ -29,29 +29,25 @@
         </div>
     </header>
 
-    <!-- Modal do Sorteador -->
+    <!-- Modal do Gerador de QR Code -->
     <div id="numberDrawerModal" class="modal">
-        <div class="modal-content sorteador-modal">
+        <div class="modal-content geradorqrcode-modal">
             <span class="close">&times;</span>
-            <form class="sorteador-form">
-                <div class="sorteador-row">
-                    <span>Sorte</span>
-                    <input type="number" id="quantity" min="1" max="10" value="1" class="sorteador-input" />
-                    <span id="label-num">número</span>
+            <form class="geradorqrcode-form">
+                <div class="geradorqrcode-row">
+                    <input type="number" id="quantity" min="1" max="10" value="1" class="geradorqrcode-input" />
+                    <div class="geradorqrcode-row">
+                        <input type="number" id="minNumber" min="1" value="1" class="geradorqrcode-input" />
+                        <input type="number" id="maxNumber" min="1" value="100" class="geradorqrcode-input" />
+                        <button id="drawButton" type="button" class="btn geradorqrcode-btn">GERAR AGORA!</button>
+                    </div>
                 </div>
-                <div class="sorteador-row">
-                    <span>entre</span>
-                    <input type="number" id="minNumber" min="1" value="1" class="sorteador-input" />
-                    <span>e</span>
-                    <input type="number" id="maxNumber" min="1" value="100" class="sorteador-input" />
+                <div class="geradorqrcode-info">
+                    <strong>Gerador de QR Code gratuito!</strong>
+                    <p>Para acessar o gerador rápido, sem opção de salvar, clique aqui.</p>
                 </div>
-                <button id="drawButton" type="button" class="btn sorteador-btn">SORTEAR AGORA!</button>
             </form>
             <div id="drawResult" class="draw-result"></div>
-            <div class="sorteador-info">
-                <strong>Sorteador de números aleatórios gratuito!</strong>
-                <p>Para acessar o sorteio rápido, sem opção de salvar, clique aqui.</p>
-            </div>
         </div>
     </div>
 

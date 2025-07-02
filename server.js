@@ -15,28 +15,39 @@ app.get('/', (req, res) => {
     res.status(200).send('Health check OK. Scraper is ready.');
 });
 
-// Servir arquivos estáticos do diretório raiz
-app.use(express.static(path.join(__dirname)));
+// Servir arquivos buildados do React (se existirem)
+const distPath = path.join(__dirname, 'dist');
+if (fs.existsSync(distPath)) {
+    app.use(express.static(distPath));
+    console.log('Servindo arquivos buildados do React');
+} else {
+    // Fallback: servir arquivos estáticos do diretório raiz
+    app.use(express.static(path.join(__dirname)));
+    console.log('Servindo arquivos estáticos da raiz');
+}
 
-// Rota para redirecionamento de links curtos
+// Rota para redirecionamento de links curtos (deve ser a última!)
 app.get('/:shortCode', (req, res) => {
     const shortCode = req.params.shortCode;
-    
-    // Ignora arquivos estáticos e rotas conhecidas
-    if (shortCode.includes('.') || 
-        ['api', 'login', 'signup', 'dashboard', 'pricing', 'features', 'contato', 'termos', 'privacidade'].includes(shortCode)) {
+
+    // Ignora arquivos estáticos e páginas HTML
+    if (
+        shortCode.includes('.') ||
+        shortCode.endsWith('.html') ||
+        ['api', 'login', 'signup', 'dashboard', 'pricing', 'features', 'contato', 'termos', 'privacidade', 'geradordeqrcode'].includes(shortCode)
+    ) {
         return res.status(404).sendFile(path.join(__dirname, '404.html'));
     }
-    
+
     // Tenta carregar os dados do localStorage do servidor (simulado)
     try {
         const linksData = loadLinksFromStorage();
         const longUrl = linksData[shortCode];
-        
+
         if (longUrl) {
             // Incrementa o contador de cliques
             incrementClickCount(shortCode);
-            
+
             // Redireciona para a URL original
             res.redirect(301, longUrl);
         } else {
