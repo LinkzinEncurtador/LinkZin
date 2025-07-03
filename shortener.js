@@ -12,10 +12,6 @@ class LinkShortener {
 
     async shortenUrl(longUrl) {
         try {
-            // Verifica se o usuário pode criar mais links
-            if (!linkController.canCreateLink()) {
-                throw new Error('Limite de links atingido para este mês');
-            }
 
             // Verifica se a URL é válida
             if (!this.isValidUrl(longUrl)) {

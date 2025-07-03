@@ -345,8 +345,6 @@
                         <button type="submit" class="btn btn-primary">Encurtar Link</button>
                     </form>
                     <div id="result" class="results"></div>
-                    <div id="remaining" class="remaining-links">Links restantes este mês: 15</div>
-                    <div class="free-info" style="margin-top:8px;color:#2563eb;font-size:1.02rem;">Este site está disponível gratuitamente por alguns meses!<br>Aproveite essa oportunidade para usar todos os recursos enquanto durar!</div>
                 </div>
             </div>
         </section>
@@ -444,13 +442,6 @@
             const urlForm = document.getElementById('urlForm');
             const urlInput = document.getElementById('urlInput');
             const resultDiv = document.getElementById('result');
-            const remainingDiv = document.getElementById('remaining');
-
-            // Função para atualizar o contador de links restantes
-            function updateRemainingLinks() {
-                const remaining = linkController.getRemainingLinks();
-                remainingDiv.textContent = `Links restantes este mês: ${remaining}`;
-            }
 
             urlForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
@@ -467,16 +458,7 @@
                     return;
                 }
 
-                // Verificar se o usuário pode criar mais links
-                if (!linkController.canCreateLink()) {
-                    resultDiv.innerHTML = `
-                        <div class="error">
-                            <i class="fas fa-exclamation-circle"></i>
-                            Você atingiu o limite mensal de links. Faça upgrade para o plano Premium!
-                        </div>
-                    `;
-                    return;
-                }
+
 
                 try {
                     // Mostrar loading
@@ -505,9 +487,6 @@
 
                     // Limpar o input
                     urlInput.value = '';
-                    
-                    // Atualizar contador de links restantes
-                    updateRemainingLinks();
                 } catch (error) {
                     resultDiv.innerHTML = `
                         <div class="error">
@@ -550,9 +529,6 @@
                     }, 2000);
                 });
             };
-
-            // Inicializar o contador de links restantes
-            updateRemainingLinks();
         });
     </script>
 </body>

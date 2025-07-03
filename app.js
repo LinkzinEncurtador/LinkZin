@@ -6,16 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlForm = document.getElementById('urlForm');
     const urlInput = document.getElementById('urlInput');
     const results = document.querySelector('.results');
-    const remainingLinks = document.querySelector('.remaining-links');
-
-    // Atualiza o contador de links restantes
-    function updateRemainingLinks() {
-        const remaining = linkController.getRemainingLinks();
-        remainingLinks.textContent = `Links restantes este mês: ${remaining}`;
-    }
-
-    // Inicializa o contador
-    updateRemainingLinks();
 
     urlForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -24,19 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
         results.innerHTML = '';
         
         try {
-            // Verifica se pode criar mais links
-            if (!linkController.canCreateLink()) {
-                throw new Error('Você atingiu o limite mensal de links gratuitos');
-            }
 
             const longUrl = urlInput.value.trim();
             const result = await shortener.shortenUrl(longUrl);
             
             // Incrementa o contador de links
             linkController.incrementLinkCount();
-            
-            // Atualiza o display de links restantes
-            updateRemainingLinks();
 
             // Mostra o resultado
             const resultDiv = document.createElement('div');

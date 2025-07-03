@@ -13,10 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Atualiza o contador de links restantes
     function updateRemainingLinks() {
-        const plan = linkController.getUserPlan();
-        const limit = linkController.getLinkLimit();
-        const created = linkController.getLinksCreated();
-        remainingLinks.textContent = `${limit - created} links restantes`;
+        remainingLinks.textContent = 'Links ilimitados';
     }
 
     // Exibe os links existentes
@@ -62,10 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        if (!linkController.canCreateMoreLinks()) {
-            showError('Limite de links atingido. Atualize seu plano para criar mais links.');
-            return;
-        }
+
 
         try {
             const shortCode = shortener.shortenUrl(longUrl);

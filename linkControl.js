@@ -1,8 +1,8 @@
 // Classe para gerenciar o controle de links
 class LinkController {
     constructor() {
-        this.FREE_LIMIT = 15; // Limite mensal para usuários gratuitos
-        this.PREMIUM_LIMIT = 3000; // Limite mensal para usuários premium
+        this.FREE_LIMIT = Infinity; // Sem limite para usuários gratuitos
+        this.PREMIUM_LIMIT = Infinity; // Sem limite para usuários premium
         this.loadFromLocalStorage();
     }
 
@@ -55,9 +55,8 @@ class LinkController {
     }
 
     canCreateLink() {
-        this.checkMonthReset();
-        const limit = this.isPremium ? this.PREMIUM_LIMIT : this.FREE_LIMIT;
-        return this.monthlyCount < limit;
+        // Sem limites - sempre permite criar links
+        return true;
     }
 
     incrementLinkCount() {
@@ -66,13 +65,12 @@ class LinkController {
     }
 
     getRemainingLinks() {
-        this.checkMonthReset();
-        const limit = this.isPremium ? this.PREMIUM_LIMIT : this.FREE_LIMIT;
-        return Math.max(0, limit - this.monthlyCount);
+        // Sem limites - sempre retorna ilimitado
+        return 'Ilimitado';
     }
 
     getMonthlyLimit() {
-        return this.isPremium ? this.PREMIUM_LIMIT : this.FREE_LIMIT;
+        return 'Ilimitado';
     }
 
     isUserPremium() {
@@ -97,11 +95,10 @@ class LinkController {
 
     getMonthlyStats() {
         this.checkMonthReset();
-        const limit = this.isPremium ? this.PREMIUM_LIMIT : this.FREE_LIMIT;
         return {
             used: this.monthlyCount,
-            remaining: Math.max(0, limit - this.monthlyCount),
-            limit: limit,
+            remaining: 'Ilimitado',
+            limit: 'Ilimitado',
             isPremium: this.isPremium,
             lastReset: this.lastReset
         };

@@ -5,7 +5,7 @@ Um encurtador de links moderno e responsivo desenvolvido em JavaScript puro.
 ## 🚀 Funcionalidades
 
 - **Encurtamento de Links**: Transforme URLs longas em links curtos e amigáveis
-- **Controle de Limites**: Sistema de limites mensais (5 links gratuitos, 3000 premium)
+- **Encurtamento Ilimitado**: Crie quantos links quiser sem limites
 - **Estatísticas**: Acompanhe cliques e acessos aos seus links
 - **Interface Responsiva**: Funciona perfeitamente em desktop, tablet e mobile
 - **Armazenamento Local**: Links salvos no localStorage do navegador
@@ -50,16 +50,12 @@ Abra o arquivo `test.html` para testar diferentes cenários:
 - **Font Awesome**: Ícones
 - **Google Fonts**: Tipografia (Inter)
 
-## 📊 Sistema de Limites
+## 📊 Sistema de Encurtamento
 
-### Usuários Gratuitos
-- **Limite mensal**: 5 links
-- **Reset automático**: Todo mês
-- **Funcionalidades**: Encurtamento básico
-
-### Usuários Premium (Futuro)
-- **Limite mensal**: 3000 links
-- **Funcionalidades adicionais**: Estatísticas avançadas, links personalizados
+### Encurtamento Ilimitado
+- **Sem limites**: Crie quantos links quiser
+- **Totalmente gratuito**: Sem necessidade de planos premium
+- **Funcionalidades**: Encurtamento completo com estatísticas
 
 ## 🎨 Personalização
 
@@ -70,12 +66,8 @@ Abra o arquivo `test.html` para testar diferentes cenários:
 --accent-color: #000B3F;     /* Azul marinho */
 ```
 
-### Modificar Limites
-Para alterar os limites de links, edite o arquivo `linkControl.js`:
-```javascript
-this.FREE_LIMIT = 5;        // Limite gratuito
-this.PREMIUM_LIMIT = 3000;  // Limite premium
-```
+### Configuração
+O sistema está configurado para permitir encurtamento ilimitado de links sem restrições.
 
 ## 🔍 Funcionalidades Técnicas
 
@@ -92,8 +84,8 @@ this.PREMIUM_LIMIT = 3000;  // Limite premium
 ### Armazenamento
 - Links salvos no localStorage
 - Estatísticas de cliques
-- Controle de limites mensais
-- Reset automático mensal
+- Controle de criação de links
+- Histórico completo
 
 ## 🚀 Como Executar
 

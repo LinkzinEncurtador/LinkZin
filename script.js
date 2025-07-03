@@ -235,25 +235,12 @@ document.addEventListener('DOMContentLoaded', () => {
 async function handleLinkSubmission(event) {
     event.preventDefault();
 
-    // Verifica se o usuário está logado
-    const userEmail = getUserEmail(); // Função que retorna o email do usuário logado ou null
-    
-    // Verifica se o usuário pode criar mais links
-    const linkStatus = await linkController.canCreateLink(userEmail);
-
-    if (!linkStatus.canCreate) {
-        showLimitMessage(linkStatus.total);
-        return;
-    }
-
     // Processa a criação do link
     const urlInput = document.querySelector('#url-input');
     if (urlInput && urlInput.value) {
         try {
             const shortLink = await createShortLink(urlInput.value);
-            await linkController.registerNewLink(userEmail);
             showSuccess(shortLink);
-            updateRemainingLinks(linkStatus.remainingLinks - 1);
         } catch (error) {
             showError('Erro ao criar link encurtado. Tente novamente.');
         }
@@ -269,25 +256,9 @@ function getUserEmail() {
     return null;
 }
 
-function showLimitMessage(total) {
-    const message = document.createElement('div');
-    message.className = 'alert alert-warning';
-    message.innerHTML = `
-        <p>Você atingiu o limite de ${total} links gratuitos este mês.</p>
-        <p>Para criar mais links, considere fazer upgrade para o plano Premium.</p>
-        <a href="pricing.html" class="btn-yellow">Ver Planos</a>
-    `;
-    
-    const form = document.querySelector('.url-form');
-    form.insertAdjacentElement('afterend', message);
-}
 
-function updateRemainingLinks(remaining) {
-    const counter = document.querySelector('.links-counter');
-    if (counter) {
-        counter.textContent = `Links restantes este mês: ${remaining}`;
-    }
-}
+
+
 
 function showSuccess(shortLink) {
     const result = document.createElement('div');
