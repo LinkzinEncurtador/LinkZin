@@ -1,0 +1,4 @@
+# Arquivos sensíveis
+.env
+config.js
+config.php 

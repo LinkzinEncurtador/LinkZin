@@ -138,3 +138,29 @@ Este projeto é de uso livre para fins educacionais e comerciais.
 ---
 
 **Desenvolvido com ❤️ para facilitar o compartilhamento de links** 
+
+# Segurança
+
+## HTTPS
+- Configure redirecionamento HTTPS no servidor (Nginx/Apache).
+- Use Let's Encrypt para SSL gratuito.
+
+## Firewall
+- Use UFW:
+  sudo ufw default deny incoming
+  sudo ufw default allow outgoing
+  sudo ufw allow 80
+  sudo ufw allow 443
+  sudo ufw enable
+
+## Cloudflare
+- Ative WAF e modo Under Attack.
+
+## Permissões
+- Arquivos: 644
+- Pastas: 755
+- Nunca use 777.
+
+## Backup
+- Use cron + rsync/mysqldump/mongodump.
+- Armazene backups em S3, Google Drive, etc. 

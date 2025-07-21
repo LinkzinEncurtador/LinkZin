@@ -1,5 +1,8 @@
 import { shortener } from './shortener.js';
 import { LinkController } from './linkControl.js';
+const bcrypt = require('bcrypt');
+const validator = require('validator');
+const rateLimit = require('express-rate-limit');
 
 document.addEventListener('DOMContentLoaded', () => {
     const linkController = new LinkController();

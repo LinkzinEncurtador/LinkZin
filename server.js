@@ -3,12 +3,44 @@ const puppeteer = require('puppeteer');
 const path = require('path');
 const cors = require('cors');
 const fs = require('fs');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const validator = require('validator');
+const crypto = require('crypto');
+const morgan = require('morgan');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Habilita o CORS para todas as rotas
 app.use(cors());
+app.use(helmet());
+app.use(morgan('combined'));
+
+// Rate limiting para rotas críticas
+const limiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 30,
+  keyGenerator: (req) => req.ip + (req.headers['user-agent'] || ''),
+  message: 'Muitas requisições, tente novamente mais tarde.'
+});
+app.use('/api/shorten', limiter);
+app.use('/login', limiter);
+app.use('/admin', limiter);
+
+// Função para gerar token seguro
+function generateToken(length = 8) {
+  return crypto.randomBytes(length).toString('base64url').slice(0, length);
+}
+
+// Middleware de validação de URL
+function validateUrl(req, res, next) {
+  const url = req.body.url;
+  if (!validator.isURL(url, { require_protocol: true })) {
+    return res.status(400).send('URL inválida');
+  }
+  next();
+}
 
 // Adiciona um endpoint de "Health Check" para o Render
 app.get('/', (req, res) => {
@@ -58,6 +90,17 @@ app.get('/:shortCode', (req, res) => {
         console.error('Erro ao processar redirecionamento:', error);
         res.status(404).sendFile(path.join(__dirname, '404.html'));
     }
+});
+
+// Middleware de intersticial antes do redirecionamento
+app.get('/:token', async (req, res, next) => {
+  const url = await db.getUrl(req.params.token);
+  if (!url) return res.status(404).send('URL não encontrada');
+  // Aqui você pode integrar com Google Safe Browsing
+  // Exemplo fictício:
+  // const isSafe = await checkSafeBrowsing(url);
+  // if (!isSafe) return res.status(403).send('URL bloqueada por segurança');
+  res.render('redirect-warning', { url });
 });
 
 // API para criar links curtos
